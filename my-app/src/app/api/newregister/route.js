@@ -1,41 +1,66 @@
 export async function GET(req, res) {
 
+  console.log("in the api page")
 
-    // Make a note we are on
+  const { searchParams } = new URL(req.url)
 
-    // the api. This goes to the console.
+  const firstName = searchParams.get('firstName')
+  const lastName = searchParams.get('lastName')
+  const email = searchParams.get('email')
+  const address = searchParams.get('address')
+  const pass = searchParams.get('pass')
+  const confirmPassword = searchParams.get('confirmPassword')
 
-    console.log("in the api page")
-
-
-
-    // get the values
-
-    // that were sent across to us.
-
-    const { searchParams } = new URL(req.url)
-
-    const email = searchParams.get('email')
-
-    const pass = searchParams.get('pass')
-
-
-    console.log(email);
-
-    console.log(pass);
+  console.log(firstName);
+  console.log(lastName);
+  console.log(email);
+  console.log(address);
+  console.log(pass);
+  console.log(confirmPassword);
 
 
 
+ // =================================================
+
+  const { MongoClient } = require('mongodb');
+
+
+  const url = 'mongodb+srv://b00165817:<db_password>@cluster0.okkytfu.mongodb.net/?appName=Cluster0';
+
+  const client = new MongoClient(url);
 
 
 
-    // database call goes here
+
+  const dbName = 'app';
 
 
-    // at the end of the process we need to send something back.
+  await client.connect();
 
-    return Response.json({ "data":"valid" })
+  console.log('Connected successfully to server');
 
+  const db = client.db(dbName);
+
+  const collection = db.collection('Users');
+
+
+
+  const allUsers = await collection.find({}).toArray();
+
+  console.log("All Users:", allUsers);
+
+  const findResult = await collection.find({firstName: firstName, lastName: lastName, email:email, address: address, pass: pass, confirmPassword: confirmPassword}).toArray();
+
+  console.log('Found documents =>', findResult);
+
+
+  let valid = findResult.length > 0;
+
+
+ //==========================================================
+
+
+  // Make sure to stringify and set JSON headers
+  return new Response(JSON.stringify({ Users: allUsers, login: valid }));
+  
 }
-
-

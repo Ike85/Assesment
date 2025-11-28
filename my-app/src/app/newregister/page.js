@@ -35,18 +35,33 @@ export default function Home() {
     const data = new FormData(event.currentTarget);
 
 
+    let firstName = data.get('firstName')
+
+    let lastName = data.get('lastName')
 
     let email = data.get('email')
 
+    let address = data.get('address')
+
     let pass = data.get('pass')
 
+    let confirmPassword = data.get('confirmPassword')
+
+
+    console.log("Sent firstName: " + firstName)
+
+    console.log("Sent lastName: " + lastName)
 
     console.log("Sent email:" + email)
 
+    console.log("Sent address:" + address)
+
     console.log("Sent pass:" + pass)
 
+    console.log("Sent confirmPassword: " + confirmPassword)
 
-    runDBCallAsync(`http://localhost:3000/api/login?email=${email}&pass=${pass}&pass2=${pass2}`)
+
+    runDBCallAsync(`api/newregister?firstName=${firstName}&lastName=${lastName}&email=${email}&address=${address}&pass=${pass}&confirmPassword=${confirmPassword}`);
 
 
 
@@ -94,6 +109,47 @@ export default function Home() {
 
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
 
+          
+            <TextField
+            
+                margin="normal"
+
+                required
+
+                fullWidth
+
+                name="firstName"
+
+                label="First Name"
+
+                type="firstName"
+
+                id="firstName"
+
+                autoComplete="current-password"
+
+            />
+
+            <TextField
+            //Last Name
+                margin="normal"
+
+                required
+
+                fullWidth
+
+                name="lastName"
+
+                label="Last Name"
+
+                type="lastName"
+
+                id="lastName"
+
+                autoComplete="current-password"
+
+            />
+
             <TextField
 
                 margin="normal"
@@ -115,6 +171,26 @@ export default function Home() {
             />
 
             <TextField
+            //Addres Line 1 (1 foyle road)
+                margin="normal"
+
+                required
+
+                fullWidth
+
+                name="address"
+
+                label="Address"
+
+                type="address"
+
+                id="address"
+
+                autoComplete="current-password"
+
+            />
+
+            <TextField
 
                 margin="normal"
 
@@ -124,7 +200,7 @@ export default function Home() {
 
                 name="pass"
 
-                label="Pass"
+                label="Password"
 
                 type="pass"
 
@@ -134,11 +210,23 @@ export default function Home() {
 
             />
 
-            <FormControlLabel
+            <TextField
+            //Confirm Password
+                margin="normal"
 
-                control={<Checkbox value="remember" color="primary" />}
+                required
 
-                label="Remember me"
+                fullWidth
+
+                name="confirmPassword"
+
+                label="Confirm Password"
+
+                type="confirmPassword"
+
+                id="confirmPassword"
+
+                autoComplete="current-password"
 
             />
 
@@ -150,13 +238,16 @@ export default function Home() {
 
                 variant="contained"
 
-                sx={{ mt: 3, mb: 2 }}
-
+                sx={{ mt: 10,
+                   mb: 2,
+                  backgroundColor: 'orange' }}
             >
 
-              Sign In
+              Sign UP
 
             </Button>
+
+        <p style={{ textAlign: 'center', marginTop: '1rem' }}>Already have an account? <a href = "/">Login</a></p>
 
           </Box>
 
