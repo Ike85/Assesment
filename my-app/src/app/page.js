@@ -105,7 +105,7 @@ export default function Home() {
 
                 id="email"
 
-                label="Email "
+                label="Email Address"
 
                 name="email"
 
